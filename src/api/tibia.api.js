@@ -4,7 +4,14 @@ const request = require('request-promise');
 
 class TibiaAPI {
 
+    validateUnexistCharacter(htmlResponse){
+        let validatation = /does not exist/;
+        return validatation.test(htmlResponse);
+    }
+
     createCharacterObject(htmlResponse) {
+
+        if(this.validateUnexistCharacter(htmlResponse)) throw new Error('Character doest not exist');
 
         let regexName = /<td width=20%>Name:<\/td><td>\w*\s?(\w*)?/;
         let regexSex = /<td>Sex:<\/td><td>\w*/;
@@ -12,6 +19,7 @@ class TibiaAPI {
         let regexAchievementPoint = /<nobr>Achievement Points:<\/nobr><\/td><td>\w*/;
         let regexWorld = /<td>World:<\/td><td>\w*\s?(\w*)?/;
         let regexResidence = /<td>Residence:<\/td><td>\w*\s?(\w*)?/;
+        let regexLevel = /<td>Level:<\/td><td>\w*/
 
         return new Promise((resolve, reject) => {
             try {
@@ -19,13 +27,16 @@ class TibiaAPI {
                     name: regexName
                         .exec(htmlResponse)[0]
                         .replace(/<td width=20%>Name:<\/td><td>/, ''),
+                    level: regexLevel
+                        .exec(htmlResponse)[0]
+                        .replace(/<td>Level:<\/td><td>/, ''),
                     sex: regexSex
                         .exec(htmlResponse)[0]
                         .replace(/<td>Sex:<\/td><td>/, ''),
                     vocation: regexVocation
                         .exec(htmlResponse)[0]
                         .replace(/<td>Vocation:<\/td><td>/, ''),
-                    achievementPoint: regexAchievementPoint
+                    achievement_point: regexAchievementPoint
                         .exec(htmlResponse)[0]
                         .replace(/<nobr>Achievement Points:<\/nobr><\/td><td>/, ''),
                     world: regexWorld
@@ -44,10 +55,12 @@ class TibiaAPI {
 
     validateParameter(reqQuery) {
         return new Promise((resolve, reject) => {
+            if (!reqQuery) 
+                reject(new Error("name is required"))
+            if (/\d/.test(reqQuery)) 
+                reject(new TypeError("name contains invalid character"))
             if (reqQuery) 
                 resolve(reqQuery)
-            else 
-                reject(new Error("name is required"))
         })
     }
 
@@ -67,6 +80,7 @@ class TibiaAPI {
 
     consultSite(app, characterName) {
         let url = `https://secure.tibia.com/community/?subtopic=characters&name=${characterName}`;
+    
         return request(url);
     }
 }
