@@ -15,6 +15,7 @@
     "start": "nodemon ./src/index.js"
   },
   "devDependencies": {
+    "jest": "^18.1.0",
     "nodemon": "^1.11.0"
   }
 }
