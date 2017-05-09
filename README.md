@@ -48,6 +48,8 @@ content-type: application/json
 ## Demo
 If you use [Postman](https://www.getpostman.com/) to test requests, just open [this link](https://www.getpostman.com/collections/884ffe7f9034083f4057) and it'll save a simple test.
 
+If you want to see a client-side consuming this API, check my [codepen](http://codepen.io/raulfdm/full/bgOQZV/)
+
 
 ## Contributing
 Want to contribute? [Follow these recommendations.](https://github.com/raulfdm/tibia-api/blob/master/CONTRIBUTING.md)
