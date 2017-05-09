@@ -8,21 +8,25 @@ Unfortunally, [Cipsoft](https://www.cipsoft.com/index.php/en/) doens't provide a
 
 > Consult Tibia character info
 
-Requisition Body content:
-```json
-{
-    "name": "character-name"
-}
-```
-
 |   Method         |       URL                               |     Response          |
 |   ---            |                       ---               |         ---           |
 |   POST           |   https://api-tibia.herokuapp.com/     |     Character Info    |
 
 
-### Response
+## Request
 
-#### Character Info
+### Header
+```
+content-type: application/json
+```
+### Body
+```json
+{
+    "name": "character-name"
+}
+```
+## Response 
+### Character Info
 ```json
 {
   "name": "",
@@ -34,7 +38,7 @@ Requisition Body content:
   "residence": ""
 }
 ```
-#### Error
+### Error
 ```json
 {
   "error": "Character doest not exist"
@@ -42,7 +46,8 @@ Requisition Body content:
 ```
 
 ## Demo
-...
+If you use [Postman](https://www.getpostman.com/) to test requests, just open [this link](https://www.getpostman.com/collections/884ffe7f9034083f4057) and it'll save a simple test.
+
 
 ## Contributing
 Want to contribute? [Follow these recommendations.](https://github.com/raulfdm/tibia-api/blob/master/CONTRIBUTING.md)
