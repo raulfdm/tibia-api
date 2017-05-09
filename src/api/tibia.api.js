@@ -4,15 +4,17 @@ const request = require('request-promise');
 
 class TibiaAPI {
 
-    validateUnexistCharacter(htmlResponse){
+    validateUnexistCharacter(htmlResponse) {
         let validatation = /does not exist/;
-        return validatation.test(htmlResponse);
+        return validatation.test(htmlResponse) || /^Vocation/.test(htmlResponse);
     }
 
     createCharacterObject(htmlResponse) {
+        console.log(htmlResponse)
 
-        if(this.validateUnexistCharacter(htmlResponse)) throw new Error('Character doest not exist');
-
+        if (this.validateUnexistCharacter(htmlResponse)) 
+            throw new Error('Character doest not exist');
+        
         let regexName = /<td width=20%>Name:<\/td><td>\w*\s?(\w*)?/;
         let regexSex = /<td>Sex:<\/td><td>\w*/;
         let regexVocation = /<td>Vocation:<\/td><td>\w*\s?(\w*)?/;
@@ -53,14 +55,18 @@ class TibiaAPI {
         })
     }
 
-    validateParameter(reqQuery) {
+    validateParameter(requestBody) {
+        requestBody.name = requestBody.name.trim();
+        let regexInvalidChacarater = /["'[\]!@#$%"&*()_\-+§={}^~,.><;:]/;
+        let regexContainsNumber = /\d/;
+
         return new Promise((resolve, reject) => {
-            if (!reqQuery) 
+            if (!requestBody.name) 
                 reject(new Error("name is required"))
-            if (/\d/.test(reqQuery)) 
+            else if (regexContainsNumber.test(requestBody.name) || regexInvalidChacarater.test(requestBody.name)) 
                 reject(new TypeError("name contains invalid character"))
-            if (reqQuery) 
-                resolve(reqQuery)
+            else 
+                resolve(requestBody)
         })
     }
 
@@ -70,7 +76,6 @@ class TibiaAPI {
                 let characterName = reqQuery
                     .name
                     .replace(/\s/, "+");
-
                 resolve(characterName)
             } catch (error) {
                 reject(error)
@@ -80,7 +85,6 @@ class TibiaAPI {
 
     consultSite(app, characterName) {
         let url = `https://secure.tibia.com/community/?subtopic=characters&name=${characterName}`;
-    
         return request(url);
     }
 }
