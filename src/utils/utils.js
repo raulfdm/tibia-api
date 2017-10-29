@@ -14,8 +14,6 @@ const getDomElement = (dom, selector) => dom.window.document.querySelector(selec
 
 const getPropertyValue = (HTMLElement, attr) => HTMLElement[attr]
 
-const firstLetterUpperCase = (text) => {}
-
 module.exports = {
   fixCharacterName,
   getDomElement,

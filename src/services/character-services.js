@@ -3,22 +3,20 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
 const { getDomElement, getPropertyValue } = require('../utils/utils')
-
 const Character = require('../models/Character')
 
-const getCharacterPage = async (characterName = '') =>
-  new Promise(async (resolve, reject) => {
-    if (characterName.length === 0) {
-      reject(new Error('Nome do personagem não pode ser vazio'))
-    }
-    try {
-      const url = `https://secure.tibia.com/community/?subtopic=characters&name=${characterName}`
-      const dom = await JSDOM.fromURL(url)
-      resolve(dom)
-    } catch (error) {
-      reject(error)
-    }
-  })
+const getCharacterPage = async (characterName = '') => new Promise(async (resolve, reject) => {
+  if (characterName.length === 0) {
+    reject(new Error('Nome do personagem não pode ser vazio'))
+  }
+  try {
+    const url = `https://secure.tibia.com/community/?subtopic=characters&name=${characterName}`
+    const dom = await JSDOM.fromURL(url)
+    resolve(dom)
+  } catch (error) {
+    reject(error)
+  }
+})
 
 const fillAllCharacterInformations = (dom) => {
   const character = new Character()
@@ -89,7 +87,14 @@ const fillAllCharacterInformations = (dom) => {
   return character
 }
 
+const getCharacterByName = async (characterName) => {
+  const playerDom = await getCharacterPage(characterName)
+  const character = fillAllCharacterInformations(playerDom)
+  return character
+}
+
 module.exports = {
   getCharacterPage,
+  getCharacterByName,
   fillAllCharacterInformations,
 }

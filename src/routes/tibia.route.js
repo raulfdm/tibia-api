@@ -1,18 +1,22 @@
-const { getCharacterPage, fillAllCharacterInformations } = require('../services/character-services')
-const { hasRequiredParameters } = require('../utils/validations')
-
 module.exports = (app) => {
-  app.post('/', async (req, res) => {
-    const sentParams = req.body
-    const hasAllParams = hasRequiredParameters(['characterName'], sentParams)
-
-    if (!hasAllParams.success) {
-      res.status(400).json({ ...hasAllParams })
+  app.get('/', async (req, res) => {
+    const response = {
+      message: 'invalid route',
+      availableRoute: {
+        '/graphql/player': {
+          method: 'POST',
+          args: {
+            query: 'GraphQL Query',
+            example:
+              '{ character(characterName: "mad dentist") {name sex vocation level achievmentPoint world residence lastLogin } }',
+          },
+          response: {
+            data: 'JSON containing all required character informations',
+          },
+        },
+      },
     }
 
-    const playerDom = await getCharacterPage(sentParams.characterName)
-    const character = fillAllCharacterInformations(playerDom)
-
-    res.json(character.fullInformations)
+    res.json(response)
   })
 }
