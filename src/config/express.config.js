@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const graphqlHTTP = require('express-graphql')
 const schema = require('../schema/Character.js')
 
-module.exports = function () {
+module.exports = () => {
   const app = express()
 
   app.use((req, res, next) => {
