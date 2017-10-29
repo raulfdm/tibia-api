@@ -15,7 +15,6 @@
     "node": "8.7.0"
   },
   "dependencies": {
-    "body-parser": "^1.16.0",
     "consign": "^0.1.2",
     "express": "^4.14.1",
     "express-graphql": "^0.6.11",

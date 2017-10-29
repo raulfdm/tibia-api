@@ -1,6 +1,5 @@
 const express = require('express')
 const consign = require('consign')
-const bodyParser = require('body-parser')
 const graphqlHTTP = require('express-graphql')
 const schema = require('../schema/Character.js')
 
@@ -13,7 +12,6 @@ module.exports = () => {
     next()
   })
 
-  app.use(bodyParser.json())
   app.use(
     '/graphql/player',
     graphqlHTTP({
