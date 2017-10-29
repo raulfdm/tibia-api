@@ -1,14 +1,18 @@
-const TibiaAPI = require('../api/tibia.api');
+const { getCharacterPage, fillAllCharacterInformations } = require('../services/character-services')
+const { hasRequiredParameters } = require('../utils/validations')
 
-module.exports = app => {
+module.exports = (app) => {
+  app.post('/', async (req, res) => {
+    const sentParams = req.body
+    const hasAllParams = hasRequiredParameters(['characterName'], sentParams)
 
-    app.post('/', (req, res) => {
-        TibiaAPI
-            .validateParameter(req.body)
-            .then(characterName => TibiaAPI.getCharacterName(characterName))
-            .then(parameterNameForGet => TibiaAPI.consultSite(app, parameterNameForGet))
-            .then(htmlResponse => TibiaAPI.createCharacterObject(htmlResponse))
-            .then(character => res.json(character))
-            .catch(err => res.status(400).json({error: err.message}));
-    })
+    if (!hasAllParams.success) {
+      res.status(400).json({ ...hasAllParams })
+    }
+
+    const playerDom = await getCharacterPage(sentParams.characterName)
+    const character = fillAllCharacterInformations(playerDom)
+
+    res.json(character.fullInformations)
+  })
 }
