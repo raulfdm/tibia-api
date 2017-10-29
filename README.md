@@ -2,54 +2,69 @@
 > API Rest to consult informations about tibia characters
 
 ## How it works
-Unfortunally, [Cipsoft](https://www.cipsoft.com/index.php/en/) doens't provide an API to get any information about **Tibia** Chararacters. So, I've create this API which recieves a POST method with a **name** in body content and make a requisition to Tibia website to consult all the informations about this character. The API read the result and return an object with all informations.
+Unfortunally, [Cipsoft](https://www.cipsoft.com/index.php/en/) doens't provide an API to get any information about **Tibia Chararacters**. So, I've created this API which receives a character name and scrapps tibia website bringing general informations about the character.
+
+## Tecnhologies used
+The first version was wrote using a simple POST. But now, I refactored to use GraphQL. You can use the panel to check it out the informations and make queries or you can consume it by a HTTP POST. Following the explanation to use both methods.
 
 ## API
 
-> Consult Tibia character info
+### GraphQL Panel
 
-|   Method         |       URL                               |     Response          |
-|   ---            |                       ---               |         ---           |
-|   POST           |   https://api-tibia.herokuapp.com/     |     Character Info    |
+- URL: [https://api-tibia.herokuapp.com/graphql/player](https://api-tibia.herokuapp.com/graphql/player)
 
+To consult a player informations using this panel, you must write a query passing the character name and which informations you'd like to receive, for example:
 
-## Request
-
-### Header
-```
-content-type: application/json
-```
-### Body
-```json
-{
-    "name": "character-name"
+```graphql
+query{
+  character(characterName: "mad dentist") {
+    name
+    sex
+    vocation
+    level
+    achievmentPoint
+    world
+    residence
+    lastLogin
+    accountStatus
+  }
 }
 ```
+And you'll receive a JSON like this:
+![Imgur](https://i.imgur.com/vYhsU2o.png)
+
+
+### REST: Post
+- URL: [https://api-tibia.herokuapp.com/graphql/player](https://api-tibia.herokuapp.com/graphql/player)
+
+To consume this API using HTTP POST, you must send a **header** requiring an 'application/json' and send a JSON with one key (query) and the same query made on GraphQL panel. 
+
+```json
+{
+	"query": "{ character(characterName: \"mad dentist\") {name sex vocation level achievmentPoint world residence lastLogin } }"
+}
+```
+
+How we can see, it's the same query, but just in one line.
+
 ## Response 
 ### Character Info
 ```json
 {
-  "name": "",
-  "level": "",
-  "sex": "",
-  "vocation": "",
-  "achievement_point": "",
-  "world": "",
-  "residence": ""
+    "data": {
+        "character": {
+            "name": "String",
+            "sex": "String",
+            "vocation": "String",
+            "level": "String",
+            "achievmentPoint": "String",
+            "world": "String",
+            "residence": "String",
+            "lastLogin": "String"
+        }
+    }
 }
 ```
-### Error
-```json
-{
-  "error": "Character doest not exist"
-}
-```
-
-## Demo
-If you use [Postman](https://www.getpostman.com/) to test requests, just open [this link](https://www.getpostman.com/collections/884ffe7f9034083f4057) and it'll save a simple test.
-
-If you want to see a client-side consuming this API, check my [codepen](http://codepen.io/raulfdm/full/bgOQZV/)
-
 
 ## Contributing
 Want to contribute? [Follow these recommendations.](https://github.com/raulfdm/tibia-api/blob/master/CONTRIBUTING.md)
