@@ -8,7 +8,8 @@
     "lint": "./node_modules/.bin/eslint src/",
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "deploy": "git push heroku master && heroku ps:scale web=1 && heroku open"
   },
   "engines": {
     "node": "8.7.0"
@@ -19,7 +20,8 @@
     "express": "^4.14.1",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",
-    "jsdom": "^11.3.0"
+    "jsdom": "^11.3.0",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "eslint": "^4.10.0",
