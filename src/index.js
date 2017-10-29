@@ -1,8 +1,7 @@
-const app = require('.//config/express.config.js')();
-let url = 'localhost';
+const app = require('./config/express.config.js')()
 
-let port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080
 
 app.listen(port, () => {
-    console.log('Server is running on port ' + port);
-});
+  console.log(`Server is running on port ${port}`)
+})
