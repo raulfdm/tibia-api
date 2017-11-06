@@ -1,9 +1,9 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql')
-const { getCharacterByName } = require('../services/character-services')
+
+const { getCharacterInfos } = require('../services/character.service')
 
 const CharacterType = new GraphQLObjectType({
-  name: 'Character',
-  description: '...',
+  name: 'character',
   fields: () => ({
     name: {
       type: GraphQLString,
@@ -21,9 +21,9 @@ const CharacterType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: character => character.level,
     },
-    achievmentPoint: {
+    achievementPoints: {
       type: GraphQLString,
-      resolve: character => character.achievmentPoint,
+      resolve: character => character.achievementPoints,
     },
     world: {
       type: GraphQLString,
@@ -47,17 +47,17 @@ const CharacterType = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'player',
-    description: 'This query will provide basic Tibia player informations. You must pass a character name',
+    description: "This is my schema which will inform all player's informations",
 
     fields: () => ({
-      character: {
+      player: {
         type: CharacterType,
         args: {
-          characterName: {
+          nickname: {
             type: GraphQLString,
           },
         },
-        resolve: async (root, args) => getCharacterByName(args.characterName),
+        resolve: (root, args) => getCharacterInfos(args.nickname),
       },
     }),
   }),
