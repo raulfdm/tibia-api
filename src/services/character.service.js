@@ -3,6 +3,8 @@ const { hasSpecificLength } = require('../utils/validations.utils')
 
 const Character = require('../models/Character')
 
+const logger = require('winston')
+
 const getCharacterInfos = (playerName = '') =>
   new Promise(async (resolve, reject) => {
     const playerNameWasNotSent = hasSpecificLength({
@@ -20,12 +22,12 @@ const getCharacterInfos = (playerName = '') =>
 
       const character = new Character(dom)
       if (character.playerDoesntExists()) {
-        console.trace('Player doesn\'t exists')
-        reject(Error('Player doesn\'t exists'))
+        logger.log('info', "Player doesn't exists")
+        reject("Player doesn't exists")
       }
       resolve(character.allCharacterInformation)
     } catch (error) {
-      console.trace(error)
+      logger.log('error', error)
       reject(error)
     }
   })
