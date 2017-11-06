@@ -1,7 +1,7 @@
 const express = require('express')
-const consign = require('consign')
 const graphqlHTTP = require('express-graphql')
-const schema = require('../schema/Character.js')
+
+const schema = require('../schemas/Character')
 
 module.exports = () => {
   const app = express()
@@ -13,17 +13,13 @@ module.exports = () => {
   })
 
   app.use(
-    '/graphql/player',
+    '/player',
     graphqlHTTP({
+      formatError: error => ({ message: error.message }),
       schema,
       graphiql: true,
     }),
   )
-
-  consign({ cwd: 'src' })
-    .include('api')
-    .then('routes')
-    .into(app)
 
   return app
 }
