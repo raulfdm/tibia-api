@@ -16,10 +16,10 @@ const getTextContent = (dom = {}, selector = '') => {
 }
 
 const getDomFromURL = (url = '') => {
-  // Alterado para usar a função validadora de length
   if (hasSpecificLength({ target: url, length: 0 })) {
     throw new Error('URL is required')
   }
+  
 
   return JSDOM.fromURL(url)
 }
