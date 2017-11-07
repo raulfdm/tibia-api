@@ -10,7 +10,8 @@
     "lint": "./node_modules/.bin/eslint src/",
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "test": "jest --watch",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "deploy": "git push heroku master && heroku ps:scale web=1 && heroku open"
   },
   "engines": {
