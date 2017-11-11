@@ -1,6 +1,6 @@
 {
   "name": "tibia-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "repository": {
     "url": "https://github.com/raulfdm/tibia-api"
@@ -10,7 +10,8 @@
     "lint": "./node_modules/.bin/eslint src/",
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "test": "jest --watch",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "deploy": "git push heroku master && heroku ps:scale web=1 && heroku open"
   },
   "engines": {
@@ -22,6 +23,7 @@
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.7",
     "jsdom": "^11.3.0",
+    "moment-timezone": "^0.5.14",
     "request": "^2.83.0",
     "winston": "^2.4.0"
   },
