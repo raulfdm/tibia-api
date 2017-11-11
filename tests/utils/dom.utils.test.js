@@ -29,9 +29,9 @@ describe('fn: getDomFromURL', () => {
     expect(() => getDomFromURL()).toThrow()
   })
 
-  test.skip('Should return a instance of JSDOM', () => {
+  test('Should return a instance of JSDOM', () => {
     getDomFromURL('https://secure.tibia.com/community/?subtopic=characters&name=')
-      .then(dom => console.log(dom instanceof JSDOM))
-      .catch(err => console.log(err))
-  })
+      .then(dom => expect(dom).toBeInstanceOf(JSDOM))
+      .catch(err => null)
+  }) 
 })
