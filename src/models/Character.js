@@ -1,78 +1,32 @@
-const { getTextContent } = require('../utils/dom.utils')
 const { tibiaTime2Moment } = require('../utils/conversors.utils')
 
 class Character {
-  constructor(dom) {
-    this._dom = dom
+  constructor (table) {
+    this._table = table
   }
 
-  playerDoesntExists() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table > tbody > tr:nth-child(1) > td > b'
-    const title = getTextContent(this._dom, selector)
-    return /not find/gi.test(title)
+  playerDoesntExists () {
+    if (this._table.name === undefined) {
+      return "Player doesn't exists"
+    }
   }
 
-  get name() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get sex() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(3) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get vocation() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(4) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get level() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(5) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get achievementPoints() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get world() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(7) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get residence() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(8) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-  get lastLogin() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(9) > td:nth-child(2)'
-    const time = getTextContent(this._dom, selector)
-    const formattedTime = tibiaTime2Moment(time)
-
-    return formattedTime.format()
-  }
-  get accountStatus() {
-    const selector =
-      '#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(10) > td:nth-child(2)'
-    return getTextContent(this._dom, selector)
-  }
-
-  get allCharacterInformation() {
+  get allCharacterInformation () {
     return {
-      name: this.name,
-      sex: this.sex,
-      vocation: this.vocation,
-      level: this.level,
-      achievementPoints: this.achievementPoints,
-      world: this.world,
-      residence: this.residence,
-      lastLogin: this.lastLogin,
-      accountStatus: this.accountStatus,
+      name: this._table.name,
+      formerNames: this._table.formernames,
+      sex: this._table.sex,
+      vocation: this._table.vocation,
+      level: this._table.level,
+      achievementPoints: this._table.achievementpoints,
+      world: this._table.world,
+      formerWorld: this._table.formerworld,
+      residence: this._table.residence,
+      house: this._table.house,
+      guildMembership: this._table.guildmembership,
+      lastLogin: tibiaTime2Moment(this._table.lastlogin).format(),
+      comment: this._table.comment,
+      accountStatus: this._table.accountstatus
     }
   }
 }

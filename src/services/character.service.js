@@ -1,4 +1,4 @@
-const { getDomFromURL } = require('../utils/dom.utils')
+const { getTableFromURL } = require('../utils/tabletojson.utils')
 const { hasSpecificLength } = require('../utils/validations.utils')
 
 const Character = require('../models/Character')
@@ -18,9 +18,9 @@ const getCharacterInfos = (playerName = '') =>
 
     try {
       const url = `https://secure.tibia.com/community/?subtopic=characters&name=${playerName}`
-      const dom = await getDomFromURL(url)
+      const table = await getTableFromURL(url)
 
-      const character = new Character(dom)
+      const character = new Character(table)
       if (character.playerDoesntExists()) {
         logger.log('info', "Player doesn't exists")
         reject("Player doesn't exists")
