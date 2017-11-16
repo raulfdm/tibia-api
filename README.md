@@ -11,7 +11,7 @@ The first version was wrote using a simple POST. But now, I refactored to use Gr
 
 ### GraphQL Panel
 
-- URL: [https://api-tibia.herokuapp.com/graphql/player](https://api-tibia.herokuapp.com/graphql/player)
+- URL: [https://api-tibia.herokuapp.com/player](https://api-tibia.herokuapp.com/player)
 
 To consult a player informations using this panel, you must write a query passing the character name and which informations you'd like to receive, for example:
 
