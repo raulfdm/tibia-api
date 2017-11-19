@@ -9,6 +9,10 @@ const CharacterType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: character => character.name,
     },
+    formerNames: {
+      type: GraphQLString,
+      resolve: character => character.formerNames,
+    },
     sex: {
       type: GraphQLString,
       resolve: character => character.sex,
@@ -29,13 +33,29 @@ const CharacterType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: character => character.world,
     },
+    formerWorld: {
+      type: GraphQLString,
+      resolve: character => character.formerWorld,
+    },
     residence: {
       type: GraphQLString,
       resolve: character => character.residence,
     },
+    house: {
+      type: GraphQLString,
+      resolve: character => character.house,
+    },
+    guildMembership: {
+      type: GraphQLString,
+      resolve: character => character.guildMembership,
+    },
     lastLogin: {
       type: GraphQLString,
       resolve: character => character.lastLogin,
+    },
+    comment: {
+      type: GraphQLString,
+      resolve: character => character.comment,
     },
     accountStatus: {
       type: GraphQLString,
